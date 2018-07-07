@@ -9,6 +9,9 @@ class Square:
         #(0,0) is left upper
         self.__x = 0
         self.__y = 0
+        self.setConnection(north, east, south, west)
+
+    def setConnection(self, north=None, east=None, south=None, west=None):
         self.__north = north
         self.__east = east
         self.__south = south
@@ -58,6 +61,9 @@ class Square:
 
     def getTerrain(self):
         return self.__terrain
+
+    def setTerrain(self, terrain):
+        self.__terrain = terrain
 
     def getNext(self, direction, ability):
         if self.isBoundaryNext(direction) or self.isAbilityBoundaryNext(direction, ability):

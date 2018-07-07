@@ -3,10 +3,13 @@ from Utils import Terrain, Ability
 
 class Creature:
 
-    def __init__(self, species, ability, direction, square):
+    def __init__(self, species, ability, direction, square = None):
         self.__species = species
         self.__ability = ability
         self.__direction = direction
+        self.__location = square
+
+    def standOn(self, square):
         self.__location = square
 
     def hop(self):
