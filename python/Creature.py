@@ -1,9 +1,9 @@
 import Utils
-from Utils import Terrain, Ability
+from Utils import Terrain, Ability, Direction
 
 class Creature:
 
-    def __init__(self, species, ability, direction, square = None):
+    def __init__(self, species, ability, direction=Direction.East, square=None):
         self.__species = species
         self.__ability = ability
         self.__direction = direction
@@ -29,7 +29,10 @@ class Creature:
         self.__direction = Utils.turnTo(self.__direction, 90)
 
     def getDirection(self):
-        return self.__direction.name
+        return self.__direction
+
+    def setDirection(self, direction):
+        self.__direction = direction
 
     def getSpecies(self):
         return self.__species

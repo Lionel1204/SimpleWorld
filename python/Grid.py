@@ -3,13 +3,9 @@ from Square import Square
 from Utils import Terrain
 
 class Grid:
+    #  upper - North
     def __init__(self):
         self.__squares = None
-
-    def initializeGrid(self, gridM, gridN, creatureNum):
-        self.createSquares(gridM, gridN)
-        self.createCreatures(creatureNum)
-        #putCreaturesInSquares()
 
     def createSquares(self, m, n, terrain=None):
         if terrain is None:
@@ -31,5 +27,5 @@ class Grid:
                 west = self.__squares[i][j - 1] if j - 1 >= 0 else None
                 self.__squares[i][j].setConnection(north, east, south, west)
 
-    def createCreatures(self, number):
-        pass
+    def getLand(self):
+        return self.__squares
