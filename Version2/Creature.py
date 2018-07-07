@@ -45,27 +45,10 @@ class Creature:
             self.__skipRound -= 1
             return None
 
-        currentIns = self.__species.instructions[self.__currentAddr]
-        currentInsOpCode = currentIns.opCode
-        currentInsAddr = currentIns.targetAddr
-        if currentInsOpCode == OpCode.HOP or  \
-        currentInsOpCode == OpCode.LEFT or  \
-        currentInsOpCode == OpCode.RIGHT or  \
-        currentInsOpCode == OpCode.INFECT:
-            self.__moveOpCodeToAddr(self.__currentAddr + 1) # move to next line
-            return currentInsOpCode
-
-        elif currentInsOpCode == OpCode.GO or  \
-        (currentInsOpCode == OpCode.IFSAME and isSame) or  \
-        (currentInsOpCode == OpCode.IFEMPTY and isEmpty) or  \
-        (currentInsOpCode == OpCode.IFENEMY and isEnemy) or  \
-        (currentInsOpCode == OpCode.IFWALL and isWall):
-            self.__moveOpCodeToAddr(currentInsAddr)# move to target addr    
-
-        else:
-            self.__moveOpCodeToAddr(self.__currentAddr + 1)# move to next line
-        
-        return self.getNextOpcode(isEnemy, isEmpty, isSame, isWall)
+        executableAddr = self.__species.runToExecutableAddr(self.__currentAddr, isEnemy, isEmpty, isSame, isWall)
+        opCode = self.__species.getOpcode(executableAddr)
+        self.__currentAddr = executableAddr + 1 # move to next line
+        return opCode
 
     def hop(self):
         if(self.__direction == Direction.EAST):
@@ -108,13 +91,6 @@ class Creature:
         self.__skipRound = Config.HILLSKIPROUND
 
 
-    def __moveOpCodeToAddr(self, newAddr):
-        insLen = len(self.__species.instructions)
-        if newAddr >= insLen or newAddr < 0:
-            self.__currentAddr = 0
-        else:
-            self.__currentAddr = newAddr
-
 
 if __name__ == "__main__":
     ins0 = Instruction(OpCode.IFENEMY, 8)
@@ -132,4 +108,6 @@ if __name__ == "__main__":
     spec = Species("FLYTRAP", inss)
     creature = Creature(spec, Direction.EAST, [Ability.FLY, Ability.ARCH], Position(1,1))
     opcode = creature.getNextOpcode(False, False, True, True)
+    assert(opcode == OpCode.RIGHT)
     opcode = creature.getNextOpcode(True, False, True, True)
+    assert(opcode == OpCode.INFECT)
