@@ -2,12 +2,13 @@ from Utils import Direction, Ability, Terrain
 
 class Square:
 
-    def __init__(self, creature, terrain, x, y, north=None, east=None, south=None, west=None):
+    def __init__(self, terrain, creature=None, north=None, east=None, south=None, west=None):
 
         self.__livingCreature = creature
         self.__terrain = terrain
-        self.__x = x
-        self.__y = y
+        #(0,0) is left upper
+        self.__x = 0
+        self.__y = 0
         self.__north = north
         self.__east = east
         self.__south = south
@@ -18,6 +19,10 @@ class Square:
 
     def setLivingCreature(self, creature):
         self.__livingCreature = creature
+
+    def setAxis(self, x, y):
+        self.__x = x
+        self.__y = y
 
     def isBoundaryNext(self, direction):
         if direction is Direction.North:

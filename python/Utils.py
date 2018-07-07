@@ -19,6 +19,13 @@ class Species(Enum):
     Flytrap = 0
     Landmine = 1
     Hop = 2
+    Food = 3
+    PathFinder = 4
+    Lrover = 5
+    Rrover = 6
+    AltRover = 7
+
+
 
 def turnTo(origDir, rotate):
     destDir = origDir.value + rotate
