@@ -76,3 +76,9 @@ class God:
                 printf("[%s, %s%s]\t\t\t", terrian.name, creatureName, direction)
             printf("\r\n")
         printf("\r\n")
+
+    def runWorld(self):
+        while True:
+            map(lambda c: c.getInstructions().runInstructionsOneRound(), self.__creatures)
+            print('Run one round complete')
+            self.outputWorld()

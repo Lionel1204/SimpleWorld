@@ -44,6 +44,12 @@ class Square:
     def isAbilityBoundaryNext(self, direction, ability):
         return (Ability.Flying not in ability) and (self.getTerrain(direction) is Terrain.Lake)
 
+    def isNextAvailable(self, direction, ability):
+        try:
+            return self.getNext(direction, ability).getLivingCreature() is None
+        except EOFError:
+            return False
+
     def getTerrianNext(self, direction):
         ter = None
         if not self.isBoundary(direction):

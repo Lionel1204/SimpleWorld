@@ -2,9 +2,9 @@ from God import God
 def main():
     print 'Hello world'
     god = God()
-    god.createWorld(4, 3, 3)
-    #operation = Operation(creature1)
-    print 'test'
+    god.createWorld(1, 4, 4)
+    print 'The Simple world has been created!'
+    god.runWorld()
 
 
 

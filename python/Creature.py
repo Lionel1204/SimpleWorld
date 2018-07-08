@@ -1,5 +1,6 @@
 import Utils
 from Utils import Terrain, Ability, Direction
+from Operation import Operation
 
 class Creature:
 
@@ -8,9 +9,13 @@ class Creature:
         self.__ability = ability
         self.__direction = direction
         self.__location = square
+        self.__instructions = Operation(self)
 
     def standOn(self, square):
         self.__location = square
+
+    def located(self):
+        return self.__location
 
     def hop(self):
         lastSquare = self.__location
@@ -37,8 +42,14 @@ class Creature:
     def getSpecies(self):
         return self.__species
 
+    def getAbility(self):
+        return self.__ability
+
+    def getInstructions(self):
+        return self.__instructions
+
     def infect(self):
-        frontSquare = self.__direction.getNext()
+        frontSquare = self.__location.getNext(self.__direction, self.__ability)
         targetCreature = frontSquare.getLivingCreature()
 
         if targetCreature is None:
@@ -49,6 +60,7 @@ class Creature:
 
     def isInfected(self, species):
         self.__species = species
+        self.__instruction.changeSpecies(species)
 
     def canBeSeen(self):
         return self.__location.getTerrian() is not Terrain.Forest
@@ -58,7 +70,7 @@ class Creature:
 
     def meetSame(self):
         try:
-          nextSquare = self.__location.getNext()
+          nextSquare = self.__location.getNext(self.__direction, self.__ability)
           nextCreature = nextSquare.getLivingCreature()
           if nextCreature is None:
               return False
@@ -74,3 +86,6 @@ class Creature:
           return False
         except EOFError:
             return True
+
+    def isNextSquareAvailable(self):
+        return self.__location.isNextAvailable(self.__direction, self.__ability)

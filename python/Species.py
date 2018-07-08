@@ -1,6 +1,6 @@
 from Utils import SpeciesType
 
-class species:
+class Species:
     def __init__(self):
         pass
 
