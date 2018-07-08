@@ -99,3 +99,6 @@ class Creature:
 
     def isNextSquareAvailable(self):
         return self.__location.isNextAvailable(self.__direction, self.__ability)
+
+    def isInHill(self):
+        return self.__location.getTerrain() is Terrain.Hill

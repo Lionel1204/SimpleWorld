@@ -5,6 +5,7 @@ class Operation:
         self.__creature = creature
         self.__readInstructions()
         self.__ip = 0
+        self.__hillFlag = False
 
     def __readInstructions(self):
         self.__instructions = Utils.loadJson('./Instruction.json')
@@ -25,12 +26,17 @@ class Operation:
         if self.__ip > len(self.__speciesInstruction):
             print('The creature {} is done!'.format(self.__creature.getSpecies().name))
             return
+
+        if self.needToSkipInst():
+            return
+
         while True:
             inst = self.__speciesInstruction[self.__ip]
             print('The creature {} run inst: {} with ability {}'.format(self.__creature.getSpecies().name, inst, self.__creature.getAbility()))
             try:
                 isEnd = self.parseInstruction(inst)
             except EOFError:
+                self.__ip += 1
                 break
 
             if isEnd:
@@ -95,3 +101,14 @@ class Operation:
 
     def runGoIns(self, to):
         self.__ip = to
+
+    def needToSkipInst(self):
+        # Jump one round
+        if not self.__hillFlag and self.__creature.isInHill():
+            self.__hillFlag = not self.__hillFlag
+            return True
+
+        if self.__hillFlag:
+            self.__hillFlag = not self.__hillFlag
+
+        return False
