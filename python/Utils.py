@@ -1,4 +1,6 @@
+import json
 from enum import Enum
+
 class Direction(Enum):
     North = 0
     East = 90
@@ -15,13 +17,23 @@ class Terrain(Enum):
     Forest = 2
     Hill = 3
 
-class Species(Enum):
+class SpeciesType(Enum):
     Flytrap = 0
-    Landmine = 1
+    LandMine = 1
     Hop = 2
+    Food = 3
+    PathFinder = 4
+    Lrover = 5
+    Rrover = 6
+    AltRover = 7
 
 def turnTo(origDir, rotate):
     destDir = origDir.value + rotate
     if destDir < 0:
         destDir += 360
     return Direction(destDir)
+
+def loadJson(filename):
+    with open(filename) as f:
+        data = json.load(f)
+    return data

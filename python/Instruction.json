@@ -1,0 +1,74 @@
+{
+  "Flytrap": [
+    "ifenemy 4",
+    "left",
+    "go 1",
+    "infect",
+    "go 1"
+  ],
+  "Food": [
+    "left",
+    "go 1"
+  ],
+  "Hop": [
+    "hop",
+    "go 1"
+  ],
+  "LandMine": [
+    "ifwall 5",
+    "ifsame 5",
+    "infect",
+    "go 1",
+    "left",
+    "go 1"
+  ],
+  "Lrover": [
+    "ifenemy 8",
+    "ifwall 6",
+    "ifsame 6",
+    "hop",
+    "go 1",
+    "left",
+    "go 1",
+    "infect",
+    "go 1"
+  ],
+  "Rrover": [
+    "ifenemy 8",
+    "ifwall 6",
+    "ifsame 6",
+    "hop",
+    "go 1",
+    "right",
+    "go 1",
+    "infect",
+    "go 1"
+  ],
+  "AltRover": [
+    "ifenemy 8",
+    "ifwall 6",
+    "ifsame 6",
+    "hop",
+    "go 1",
+    "left",
+    "go 10",
+    "infect",
+    "go 1",
+    "ifenemy 17",
+    "ifwall 15",
+    "ifsame 15",
+    "hop",
+    "go 10",
+    "right",
+    "go 1",
+    "infect",
+    "go 10"
+  ],
+  "PathFinder": [
+    "ifempty 4",
+    "left",
+    "go 1",
+    "hop",
+    "go 1"
+  ]
+}

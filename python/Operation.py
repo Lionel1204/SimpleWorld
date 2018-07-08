@@ -1,3 +1,5 @@
+import Utils
+
 class Operation:
     def __init__(self, creature):
         self.__creature = creature
@@ -5,8 +7,13 @@ class Operation:
         self.__ip = 0
 
     def __readInstructions(self):
-        'open file and read'
-        self.__instructions = ''
+        self.__instructions = Utils.loadJson('./Instruction.json')
+        self.changeSpecies()
+
+    def changeSpecies(self):
+        species = self.__creature.getSpecies()
+        self.__speciesInstruction = self.__instructions[species.name]
+        print self.__speciesInstruction
 
     def getInstructionsArray(self):
         return self.__instructions
@@ -24,6 +31,8 @@ class Operation:
         realInst = inst.trim()
         if ' ' in realInst:
             [cmd, jumpto] = realInst.split(' ')
+            # The real instruction index is from 1
+            jumpto = jumpto - 1 if jumpto > 0 else jumpto
             self.runInstructions(cmd, jumpto)
             return False
         else:
