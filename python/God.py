@@ -10,7 +10,7 @@ class God:
         self.__creatures = None
 
     def createWorld(self, creaturesNumber, gridX, gridY):
-        self.createCreatures(creaturesNumber)
+        self.createCreatures(creaturesNumber, SpeciesType.Food)
         self.createLand(gridX, gridY)
         self.putCreaturesToLand()
         self.outputWorld()

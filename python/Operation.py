@@ -33,7 +33,8 @@ class Operation:
 
     def parseInstruction(self, inst):
         if ' ' in inst:
-            [cmd, jumpto] = inst.split(' ')
+            [cmd, step] = inst.split(' ')
+            jumpto = int(step)
             # The real instruction index is from 1
             jumpto = jumpto - 1 if jumpto > 0 else jumpto
             self.runInstructions(cmd, jumpto)
@@ -59,6 +60,8 @@ class Operation:
             self.runIfSameIns(jumpto)
         elif cmd is 'ifwall':
             self.runIfWallIns(jumpto)
+        elif cmd is 'go':
+            self.runGoIns(jumpto)
 
     def runHopIns(self):
         self.__creature.hop()
@@ -83,3 +86,6 @@ class Operation:
 
     def runIfWallIns(self, to):
         self.__ip = to if self.__creature.faceWall() else (self.__ip + 1)
+
+    def runGoIns(self, to):
+        self.__ip = to
