@@ -42,10 +42,10 @@ class Species:
         (currentInsOpCode == OpCode.IFEMPTY and isEmpty) or  \
         (currentInsOpCode == OpCode.IFENEMY and isEnemy) or  \
         (currentInsOpCode == OpCode.IFWALL and isWall):
-            return self.runToExecutableAddr(currentIns.targetAddr, isEnemy, isEmpty, isWall, isSame) 
+            return self.runToExecutableAddr(currentIns.targetAddr, isEnemy, isEmpty, isSame, isWall) 
 
         else:
-            return self.runToExecutableAddr(currentAddr + 1, isEnemy, isEmpty, isWall, isSame)
+            return self.runToExecutableAddr(currentAddr + 1, isEnemy, isEmpty, isSame, isWall)
 
     
     def getOpcode(self, inputAddr):

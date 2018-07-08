@@ -287,8 +287,8 @@ if __name__ == "__main__":
 
     terrianMap = [ 
     [Terrian.FOREST,Terrian.HILL, Terrian.PLAIN],
-    [Terrian.PLAIN,Terrian.HILL, Terrian.FOREST],
-    [Terrian.LAKE,Terrian.PLAIN, Terrian.PLAIN]]
+    [Terrian.PLAIN,Terrian.HILL, Terrian.PLAIN],
+    [Terrian.LAKE,Terrian.HILL, Terrian.HILL]]
 
     sw = SimpleWorld(terrianMap, creatureMap, creatures)
     sw.run()
