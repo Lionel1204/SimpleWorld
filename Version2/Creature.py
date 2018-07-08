@@ -43,7 +43,7 @@ class Creature:
     def getExecutableOpcode(self, isEnemy, isEmpty, isSame, isWall):
         if self.__skipRound > 0: # Skip this round and do nothing
             self.__skipRound -= 1
-            print("{0}|{1} hang in hill".format(self.__position.row, self.__position.column))
+            print("{0}|{1} hang in hill".format(self.__position.column, self.__position.row))
             return None
 
         executableAddr = self.__species.runToExecutableAddr(self.__currentAddr, isEnemy, isEmpty, isSame, isWall)
@@ -57,7 +57,7 @@ class Creature:
         if isEnteringHill and self.canFly == False:
             self.__skipRound = Config.HILLSKIPROUND
 
-        print("{0}|{1} hop into {2}|{3}".format(oldPos.row, oldPos.column, self.__position.row, self.__position.column))
+        print("{0}|{1} hop into {2}|{3}".format(oldPos.column, oldPos.row, self.__position.column, self.__position.row))
     
     def turnRight(self):
         if(self.__direction == Direction.EAST):
@@ -69,7 +69,7 @@ class Creature:
         elif(self.__direction == Direction.SOUTH):
             self.__direction = Direction.WEST
         
-        print("{0}|{1} turn right".format(self.__position.row, self.__position.column))
+        print("{0}|{1} turn right".format(self.__position.column, self.__position.row))
 
     def turnLeft(self):
         if(self.__direction == Direction.EAST):
@@ -81,12 +81,12 @@ class Creature:
         elif(self.__direction == Direction.SOUTH):
             self.__direction = Direction.EAST
 
-        print("{0}|{1} turn left".format(self.__position.row, self.__position.column))
+        print("{0}|{1} turn left".format(self.__position.column, self.__position.row))
 
     def infected(self, sourceCreature):
         self.__species = sourceCreature.__species
-        print("{0}|{1} infected by {2}|{3}".format(self.__position.row, self.__position.column, \
-        sourceCreature.__position.row, sourceCreature.__position.column))
+        print("{0}|{1} infected by {2}|{3}".format(self.__position.column, self.__position.row, \
+        sourceCreature.__position.column, sourceCreature.__position.row))
 
     def getNextPosition(self):
         nextPos = self.__position.getNextPosition(self.__direction)
