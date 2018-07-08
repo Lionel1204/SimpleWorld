@@ -68,6 +68,17 @@ class Creature:
     def isSlowdown(self):
         return (Ability.Flying not in self.__ability) and (self.__location.getTerrian() is Terrain.Hill)
 
+    def meetEnemy(self):
+        try:
+            nextSquare = self.__location.getNext(self.__direction, self.__ability)
+            nextCreature = nextSquare.getLivingCreature()
+            if nextCreature is None:
+                return False
+
+            return nextCreature.getSpecies() is not self.__species
+        except EOFError:
+            return False
+
     def meetSame(self):
         try:
           nextSquare = self.__location.getNext(self.__direction, self.__ability)

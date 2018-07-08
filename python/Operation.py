@@ -85,7 +85,7 @@ class Operation:
         self.__ip = to if self.__creature.isNextSquareAvailable() else (self.__ip + 1)
 
     def runIfEnemyIns(self, to):
-        self.__ip = to if not self.__creature.meetSame() else (self.__ip + 1)
+        self.__ip = to if self.__creature.meetEnemy() else (self.__ip + 1)
 
     def runIfSameIns(self, to):
         self.__ip = to if self.__creature.meetSame() else (self.__ip + 1)

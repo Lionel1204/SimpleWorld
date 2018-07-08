@@ -10,14 +10,14 @@ class God:
         self.__creatures = None
 
     def createWorld(self, creaturesNumber, gridX, gridY):
-        self.createCreatures(creaturesNumber, SpeciesType.Hop)
+        self.createCreatures(creaturesNumber, SpeciesType.Flytrap)
         self.createLand(gridX, gridY)
         self.putCreaturesToLand()
         self.outputWorld()
 
     def createLand(self, gridX, gridY):
         grid = Grid()
-        grid.createSquares(gridX, gridY, Terrain.Lake)
+        grid.createSquares(gridX, gridY, Terrain.Hill)
         self.__land = grid.getLand()
 
     # Random generate abilities
@@ -85,4 +85,4 @@ class God:
     def runWorld(self):
         while True:
             map(self.runARound, self.__creatures)
-            print('Run one round complete')
+            print 'Run one round complete'
