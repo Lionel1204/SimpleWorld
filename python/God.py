@@ -77,11 +77,11 @@ class God:
             printf("\r\n")
         printf("\r\n")
 
+    def runARound(self, creatures):
+        creatures.getInstructions().runInstructionsOneRound()
+        self.outputWorld()
+        
     def runWorld(self):
         while True:
-            for i in range(len(self.__creatures)):
-                self.__creatures[i].getInstructions().runInstructionsOneRound()
-                self.outputWorld()
-            #map(lambda c: c.getInstructions().runInstructionsOneRound(), self.__creatures)
+            map(self.runARound, self.__creatures)
             print('Run one round complete')
-            #self.outputWorld()
