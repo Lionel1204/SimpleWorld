@@ -2,8 +2,8 @@ class Config:
     MAXSPECIES = 3
     MAXPROGRAM = 40
     MAXCREATURES = 50
-    MAXHEIGHT = 20
-    MAXWIDTH = 20
+    MAXHEIGHT = 5
+    MAXWIDTH = 5
     HILLSKIPROUND = 1
 
 if __name__ == "__main__":

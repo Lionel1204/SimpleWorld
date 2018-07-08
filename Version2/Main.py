@@ -5,37 +5,62 @@ from Config import Config
 from Instruction import Instruction
 from Creature import Creature
 from SimpleWorld import SimpleWorld
+import random
 
-ins0 = Instruction(OpCode.IFENEMY, 8)
-ins1 = Instruction(OpCode.IFSAME, 6)
-ins2 = Instruction(OpCode.IFWALL, 6)
-ins3 = Instruction(OpCode.IFEMPTY, 4)
-ins4 = Instruction(OpCode.HOP, None)
-ins5 = Instruction(OpCode.GO, 0)
-ins6 = Instruction(OpCode.RIGHT, None)
-ins7 = Instruction(OpCode.GO, 0)
-ins8 = Instruction(OpCode.INFECT, None)
-ins9 = Instruction(OpCode.GO, 0)
-inss = [ins0, ins1, ins2,ins3, ins4, ins5, ins6, ins7, ins8, ins9]
-spec1 = Species("FLYTRAP", inss)
-creature1 = Creature(spec1, Direction.EAST, [Ability.FLY, Ability.ARCH], Position(1,1))
 
-spec2 = Species("LAND", inss)
-creature2 = Creature(spec2, Direction.WEST, [Ability.FLY], Position(2,2))
+def createTerrianMap():
+    terrianMap = [[Terrian.HILL for i in range(Config.MAXWIDTH)] for j in range(Config.MAXHEIGHT)]
+    for widthIndex in range(Config.MAXWIDTH):
+        for heightIndex in range(Config.MAXHEIGHT):
+            terrianMap[widthIndex][heightIndex] = random.choice([Terrian.FOREST, Terrian.HILL, Terrian.LAKE, Terrian.PLAIN])
 
-spec3 = Species("WOLF", inss)
-creature3 = Creature(spec3, Direction.SOUTH, [], Position(1,2))
+    return terrianMap
 
-creatures = [creature1, creature2, creature3]
-creatureMap = [ 
-[None,  None,       None],
-[None,  creature1,  creature3],
-[None,  None,       creature2]]
 
-terrianMap = [ 
-[Terrian.FOREST,Terrian.HILL, Terrian.PLAIN],
-[Terrian.PLAIN,Terrian.HILL, Terrian.PLAIN],
-[Terrian.LAKE,Terrian.HILL, Terrian.HILL]]
+def createCreatureMap():
+    inss1 = Instruction.createAttachInstructions()
+    inss2 = Instruction.createEscapeInstructions()
+    inss3 = Instruction.createAttachAllInstructions()
+    inss4 = Instruction.createAttachNoEmptyInstructions()
+    inss5 = Instruction.createHopAllInstructions()
 
-sw = SimpleWorld(terrianMap, creatureMap, creatures)
-sw.run()
+    speciesName1 = "Apower"
+    speciesName2 = "Kpower"
+    speciesName3 = "Qpower"
+    speciesName4 = "Jpower"
+    speciesName5 = "Tpower"
+
+    abilites1 = [Ability.FLY, Ability.ARCH]
+    abilites2 = [Ability.ARCH]
+    abilites3 = [Ability.FLY]
+    abilites4 = []
+
+    creatureMap = [[None for i in range(Config.MAXWIDTH)] for j in range(Config.MAXHEIGHT)]
+    creatures = []
+    for widthIndex in range(Config.MAXWIDTH):
+        for heightIndex in range(Config.MAXHEIGHT):
+            needCreate = random.choice([False,False,False,False, True])
+            if needCreate:
+                speciesName = random.choice([speciesName1,speciesName2,speciesName3,speciesName4,speciesName5])
+                inss = random.choice([inss1,inss2,inss3,inss4,inss5])
+                species = Species(speciesName, inss)
+
+                direction = random.choice([Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH])
+                abilities = random.choice([abilites1, abilites2, abilites2, abilites3, abilites3, abilites4, abilites4, abilites4])
+                creature = Creature(species, direction, abilities, Position(widthIndex, heightIndex))
+
+                # add into map
+                creatureMap[widthIndex][heightIndex] = creature
+
+                # add into list
+                creatures.append(creature)
+
+    
+    random.shuffle(creatures)
+    return (creatureMap, creatures)
+
+if __name__ == '__main__':
+    terrianMap = createTerrianMap()
+    (creatureMap, creatures) = createCreatureMap()
+    sw = SimpleWorld(terrianMap, creatureMap, creatures)
+    sw.run()

@@ -17,7 +17,6 @@ class SimpleWorld:
         self.__currentRound = 0
         self.__activeCreature = None
 
-
     def run(self):
 
         print("Game Start!")
@@ -163,9 +162,11 @@ class SimpleWorld:
 
     def hopCurrentCreature(self, creature, isWall, isEmpty, isHill):
         if isWall:
+            print("Ocha...hit a wall")
             return
         
         if isEmpty == False:
+            print("Hmm...some creature in the target")
             return
 
         self.__creatureMap[creature.position.row][creature.position.column] = None
@@ -175,6 +176,7 @@ class SimpleWorld:
     def infectTargetEnemy(self, pos, creature):
         print("Try to infect to {0}|{1}".format(pos.row, pos.column))
         if self.isOutBoundary(pos):
+            print("Hmm...nothing infected")
             return
 
         if self.isEnemy(pos, creature):
@@ -186,7 +188,7 @@ class SimpleWorld:
             return
         else:
             nextPos = pos.getNextPosition(creature.direction)
-            self.getTargetEnemy(nextPos, creature) # recursive here
+            self.infectTargetEnemy(nextPos, creature) # recursive here
         
 
     def drawWorld(self):
@@ -199,7 +201,7 @@ class SimpleWorld:
                 isActiveCreature = creature == self.__activeCreature 
 
                 if(isActiveCreature):
-                    msg += " <"
+                    msg += "<|"
                 else:
                     msg += " |"
 
@@ -218,16 +220,14 @@ class SimpleWorld:
                     msg += creature.speciesName[0].upper()
 
                     # direction
-                    msg += "^"
-
                     if creature.direction == Direction.EAST:
-                        msg += "E"
+                        msg += ">"
                     elif creature.direction == Direction.WEST:
-                        msg += "W"
+                        msg += "<"
                     elif creature.direction == Direction.NORTH:
-                        msg += "N"
+                        msg += "^"
                     elif creature.direction == Direction.SOUTH:
-                        msg += "S"
+                        msg += "V"
 
                     # fly
                     msg += "-"
@@ -235,9 +235,6 @@ class SimpleWorld:
                         msg += "F"
                     else:
                         msg += "-"
-                    
-                    # arch
-                    msg += "-"
 
                     if creature.canArc:
                         msg += "A"
@@ -246,10 +243,10 @@ class SimpleWorld:
                     
 
                 else:
-                    msg += "_______"
+                    msg += "_____"
                 
                 if(isActiveCreature):
-                    msg += "> "
+                    msg += "|>"
                 else:
                     msg += "| "
             
