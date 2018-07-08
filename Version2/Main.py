@@ -18,17 +18,17 @@ def createTerrianMap():
 
 
 def createCreatureMap():
-    inss1 = Instruction.createAttachInstructions()
+    inss1 = Instruction.createAttackInstructions()
     inss2 = Instruction.createEscapeInstructions()
-    inss3 = Instruction.createAttachAllInstructions()
-    inss4 = Instruction.createAttachNoEmptyInstructions()
+    inss3 = Instruction.createAttackAllInstructions()
+    inss4 = Instruction.createAttackNoEmptyInstructions()
     inss5 = Instruction.createHopAllInstructions()
 
-    speciesName1 = "Apower"
-    speciesName2 = "Kpower"
-    speciesName3 = "Qpower"
-    speciesName4 = "Jpower"
-    speciesName5 = "Tpower"
+    species1 = Species("SmartPower", inss1)
+    species2 = Species("EscapePower", inss2)
+    species3 = Species("KillAllPower", inss3)
+    species4 = Species("NoEmptyAttackPower", inss4)
+    species5 = Species("HopAllpower", inss5)
 
     abilites1 = [Ability.FLY, Ability.ARCH]
     abilites2 = [Ability.ARCH]
@@ -41,10 +41,7 @@ def createCreatureMap():
         for heightIndex in range(Config.MAXHEIGHT):
             needCreate = random.choice([False,False,False,False, True])
             if needCreate:
-                speciesName = random.choice([speciesName1,speciesName2,speciesName3,speciesName4,speciesName5])
-                inss = random.choice([inss1,inss2,inss3,inss4,inss5])
-                species = Species(speciesName, inss)
-
+                species = random.choice([species1,species1,species1,species2,species2,species2,species3,species3,species4,species4,species5])
                 direction = random.choice([Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH])
                 abilities = random.choice([abilites1, abilites2, abilites2, abilites3, abilites3, abilites4, abilites4, abilites4])
                 creature = Creature(species, direction, abilities, Position(widthIndex, heightIndex))

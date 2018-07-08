@@ -15,7 +15,7 @@ class Instruction:
         return self.__targetAddr
 
     @staticmethod    
-    def createAttachInstructions():
+    def createAttackInstructions():
         ins0 = Instruction(OpCode.IFENEMY, 10)
         ins1 = Instruction(OpCode.IFSAME, 6)
         ins2 = Instruction(OpCode.IFWALL, 8)
@@ -66,7 +66,7 @@ class Instruction:
         return inss
 
     @staticmethod
-    def createAttachAllInstructions():
+    def createAttackAllInstructions():
         ins0 = Instruction(OpCode.IFENEMY, 10)
         ins1 = Instruction(OpCode.IFSAME, 10)
         ins2 = Instruction(OpCode.IFWALL, 10)
@@ -83,7 +83,7 @@ class Instruction:
         return inss
     
     @staticmethod
-    def createAttachNoEmptyInstructions():
+    def createAttackNoEmptyInstructions():
         ins0 = Instruction(OpCode.IFENEMY, 10)
         ins1 = Instruction(OpCode.IFSAME, 10)
         ins2 = Instruction(OpCode.IFWALL, 8)

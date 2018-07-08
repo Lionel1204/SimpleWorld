@@ -201,7 +201,7 @@ class SimpleWorld:
                 isActiveCreature = creature == self.__activeCreature 
 
                 if(isActiveCreature):
-                    msg += "<|"
+                    msg += "#|"
                 else:
                     msg += " |"
 
@@ -219,6 +219,17 @@ class SimpleWorld:
                     # name
                     msg += creature.speciesName[0].upper()
 
+                    # fly
+                    if creature.canFly:
+                        msg += "F"
+                    else:
+                        msg += "-"
+
+                    if creature.canArc:
+                        msg += "A"
+                    else:
+                        msg += "-"
+
                     # direction
                     if creature.direction == Direction.EAST:
                         msg += ">"
@@ -229,24 +240,14 @@ class SimpleWorld:
                     elif creature.direction == Direction.SOUTH:
                         msg += "V"
 
-                    # fly
-                    msg += "-"
-                    if creature.canFly:
-                        msg += "F"
-                    else:
-                        msg += "-"
 
-                    if creature.canArc:
-                        msg += "A"
-                    else:
-                        msg += "-"
                     
 
                 else:
-                    msg += "_____"
+                    msg += "----"
                 
                 if(isActiveCreature):
-                    msg += "|>"
+                    msg += "|#"
                 else:
                     msg += "| "
             
