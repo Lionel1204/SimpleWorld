@@ -1,4 +1,5 @@
 import Utils
+from Utils import Ability
 
 class Operation:
     def __init__(self, creature):
@@ -103,6 +104,9 @@ class Operation:
         self.__ip = to
 
     def needToSkipInst(self):
+        if Ability.Flying in self.__creature.getAbility():
+            return False
+
         # Jump one round
         if not self.__hillFlag and self.__creature.isInHill():
             self.__hillFlag = not self.__hillFlag
