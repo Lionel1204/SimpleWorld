@@ -19,7 +19,7 @@ class Creature:
 
     def hop(self):
         lastSquare = self.__location
-        nextSquare = self.__square.getNext(self.__direction, self.__ability)
+        nextSquare = lastSquare.getNext(self.__direction, self.__ability)
         if nextSquare.getLivingCreature() is None:
             self.__location = nextSquare
             lastSquare.setLivingCreature(None)

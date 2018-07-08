@@ -1,5 +1,5 @@
 import numpy as np
-from Utils import SpeciesType, Ability, Direction
+from Utils import SpeciesType, Ability, Direction, Terrain
 from Creature import Creature
 from Grid import Grid
 from printf import printf
@@ -10,20 +10,21 @@ class God:
         self.__creatures = None
 
     def createWorld(self, creaturesNumber, gridX, gridY):
-        self.createCreatures(creaturesNumber, SpeciesType.Food)
+        self.createCreatures(creaturesNumber, SpeciesType.Hop)
         self.createLand(gridX, gridY)
         self.putCreaturesToLand()
         self.outputWorld()
 
     def createLand(self, gridX, gridY):
         grid = Grid()
-        grid.createSquares(gridX, gridY)
+        grid.createSquares(gridX, gridY, Terrain.Lake)
         self.__land = grid.getLand()
 
     # Random generate abilities
     def abilityGenerator(self, number):
-        abilityGroup = [None, [Ability.Flying], [Ability.Archery], [Ability.Flying, Ability.Archery]]
-        seeds = np.random.randint(4, size=number)
+        abilityGroup = [[Ability.Nothing, Ability.Nothing], [Ability.Flying, Ability.Nothing], [Ability.Archery, Ability.Nothing], [Ability.Flying, Ability.Archery]]
+        seeds = np.random.randint(len(abilityGroup), size=number)
+
         abilityGen = lambda a: abilityGroup[a]
         abilities = np.vectorize(abilityGen)(seeds)
 
@@ -31,14 +32,14 @@ class God:
 
     def directionGenerator(self, number, direction=None):
         if direction is None:
-            directionArr = np.random.randint(len(Direction), size=number)
+            directionArr = np.random.randint(len(Direction), size=(1, number))
         else:
             directionArr = np.full((1, number), direction.value)
         return np.multiply(directionArr, 90)
 
     def speciesGenerator(self, number, speciesType=None):
         if speciesType is None:
-            speciesArr = np.random.randint(len(SpeciesType), size=number)
+            speciesArr = np.random.randint(len(SpeciesType), size=(1, number))
         else:
             speciesArr = np.full((1, number), speciesType.value)
         return speciesArr
@@ -80,7 +81,7 @@ class God:
     def runARound(self, creatures):
         creatures.getInstructions().runInstructionsOneRound()
         self.outputWorld()
-        
+
     def runWorld(self):
         while True:
             map(self.runARound, self.__creatures)

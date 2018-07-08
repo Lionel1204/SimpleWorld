@@ -8,6 +8,7 @@ class Direction(Enum):
     West = 270
 
 class Ability(Enum):
+    Nothing = 0
     Flying = 1
     Archery = 2
 

@@ -27,8 +27,12 @@ class Operation:
             return
         while True:
             inst = self.__speciesInstruction[self.__ip]
-            print('The creature {} run inst: {}'.format(self.__creature.getSpecies().name, inst))
-            isEnd = self.parseInstruction(inst)
+            print('The creature {} run inst: {} with ability {}'.format(self.__creature.getSpecies().name, inst, self.__creature.getAbility()))
+            try:
+                isEnd = self.parseInstruction(inst)
+            except EOFError:
+                break
+
             if isEnd:
                 self.__ip += 1
                 break

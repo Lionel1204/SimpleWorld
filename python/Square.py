@@ -34,15 +34,15 @@ class Square:
             result = self.__east is None
         elif direction is Direction.South:
             result = self.__south is None
-        elif direction is Direction.North:
-            result = self.__north is None
+        elif direction is Direction.West:
+            result = self.__west is None
         else:
             raise TypeError('Unknown direction')
 
         return result
 
     def isAbilityBoundaryNext(self, direction, ability):
-        return (Ability.Flying not in ability) and (self.getTerrain(direction) is Terrain.Lake)
+        return (Ability.Flying not in ability) and self.getTerrianNext(direction) is Terrain.Lake
 
     def isNextAvailable(self, direction, ability):
         try:
@@ -52,15 +52,15 @@ class Square:
 
     def getTerrianNext(self, direction):
         ter = None
-        if not self.isBoundary(direction):
+        if not self.isBoundaryNext(direction):
             if direction is Direction.North:
-                ter = self._north.getTerrain()
-            elif direction is Direction.East:
-                ter = self._east.getTerrain()
-            elif direction is Direction.South:
-                ter = self._south.getTerrain()
-            elif direction is Direction.North:
                 ter = self.__north.getTerrain()
+            elif direction is Direction.East:
+                ter = self.__east.getTerrain()
+            elif direction is Direction.South:
+                ter = self.__south.getTerrain()
+            elif direction is Direction.West:
+                ter = self.__west.getTerrain()
             else:
                 raise TypeError('Unknown direction')
         return ter
@@ -81,8 +81,8 @@ class Square:
             nextSquare = self.__east
         elif direction is Direction.South:
             nextSquare = self.__south
-        elif direction is Direction.North:
-            nextSquare = self.__north
+        elif direction is Direction.West:
+            nextSquare = self.__west
         else:
             raise TypeError('Unknown direction')
 
