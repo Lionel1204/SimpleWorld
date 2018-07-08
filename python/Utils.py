@@ -32,6 +32,8 @@ def turnTo(origDir, rotate):
     destDir = origDir.value + rotate
     if destDir < 0:
         destDir += 360
+    if destDir >= 360:
+        destDir %= 360
     return Direction(destDir)
 
 def loadJson(filename):

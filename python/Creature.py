@@ -93,7 +93,7 @@ class Creature:
 
     def faceWall(self):
         try:
-          return self.isNextSquareAvailable()
+          return not self.isNextSquareAvailable()
         except EOFError:
             return True
 
