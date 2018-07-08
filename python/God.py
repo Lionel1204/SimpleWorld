@@ -79,6 +79,9 @@ class God:
 
     def runWorld(self):
         while True:
-            map(lambda c: c.getInstructions().runInstructionsOneRound(), self.__creatures)
+            for i in range(len(self.__creatures)):
+                self.__creatures[i].getInstructions().runInstructionsOneRound()
+                self.outputWorld()
+            #map(lambda c: c.getInstructions().runInstructionsOneRound(), self.__creatures)
             print('Run one round complete')
-            self.outputWorld()
+            #self.outputWorld()

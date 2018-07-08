@@ -22,6 +22,9 @@ class Operation:
         return self.__instructions if species is None else self.__speciesInstruction
 
     def runInstructionsOneRound(self):
+        if self.__ip > len(self.__speciesInstruction):
+            print('The creature {} is done!'.format(self.__creature.getSpecies().name))
+            return
         while True:
             inst = self.__speciesInstruction[self.__ip]
             print('The creature {} run inst: {}'.format(self.__creature.getSpecies().name, inst))
@@ -29,7 +32,6 @@ class Operation:
             if isEnd:
                 self.__ip += 1
                 break
-
 
     def parseInstruction(self, inst):
         if ' ' in inst:
@@ -44,23 +46,23 @@ class Operation:
             return True
 
     def runInstructions(self, cmd, jumpto = 0):
-        if cmd is 'hop':
+        if cmd == 'hop':
             self.runHopIns()
-        elif cmd is 'left':
+        elif cmd == 'left':
             self.runLeftIns()
-        elif cmd is 'right':
+        elif cmd == 'right':
             self.runRightIns()
-        elif cmd is 'infect':
+        elif cmd == 'infect':
             self.runInfectIns()
-        elif cmd is 'ifempty':
+        elif cmd == 'ifempty':
             self.runIfEmptyIns(jumpto)
-        elif cmd is 'ifenemy':
+        elif cmd == 'ifenemy':
             self.runIfEnemyIns(jumpto)
-        elif cmd is 'ifsame':
+        elif cmd == 'ifsame':
             self.runIfSameIns(jumpto)
-        elif cmd is 'ifwall':
+        elif cmd == 'ifwall':
             self.runIfWallIns(jumpto)
-        elif cmd is 'go':
+        elif cmd == 'go':
             self.runGoIns(jumpto)
 
     def runHopIns(self):
