@@ -70,7 +70,7 @@ def createTerrianMap():
 
     for widthIndex in range(Config.MAXWIDTH):
         for heightIndex in range(Config.MAXHEIGHT):
-            terrianMap[widthIndex][heightIndex] = random.choice(terrianDistr)
+            terrianMap[heightIndex][widthIndex] = random.choice(terrianDistr)
 
     return terrianMap
 
@@ -81,15 +81,15 @@ def createCreatureMap():
     for widthIndex in range(Config.MAXWIDTH):
         for heightIndex in range(Config.MAXHEIGHT):
             needCreate = random.choice(creaturDistr)
-            
+
             if needCreate:
                 species = random.choice(speciesDistr)
                 direction = random.choice([Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH])
                 abilities = random.choice(abilityDistr)
-                creature = Creature(species, direction, abilities, Position(widthIndex, heightIndex))
+                creature = Creature(species, direction, abilities, Position(heightIndex, widthIndex))
 
                 # add into map
-                creatureMap[widthIndex][heightIndex] = creature
+                creatureMap[heightIndex][widthIndex] = creature
 
                 # add into list
                 creatures.append(creature)

@@ -1,5 +1,5 @@
 class Config:
-    MAXHEIGHT = 8
+    MAXHEIGHT = 20
     MAXWIDTH = 8
     HILLSKIPROUND = 1 #how many round would be hang by the hill
 

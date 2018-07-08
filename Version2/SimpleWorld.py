@@ -50,7 +50,6 @@ class SimpleWorld:
                 currentCreature.turnRight()
 
             elif executableOpcode == OpCode.HOP:
-                print("Try to hop to {0}|{1}".format(nextPos.row, nextPos.column))
                 self.hopCurrentCreature(currentCreature, isWall, isEmpty, isHill)
                     
             elif executableOpcode == OpCode.INFECT:
@@ -58,6 +57,7 @@ class SimpleWorld:
 
             # draw world after behavior
             self.drawWorld()
+
             # wait for input
             userinput = raw_input("Press any key for Next Round or input 'exit' for stop.\n>")
             print("")
@@ -161,6 +161,7 @@ class SimpleWorld:
         return self.__creatureMap[pos.row][pos.column]
 
     def hopCurrentCreature(self, creature, isWall, isEmpty, isHill):
+        print("{0}|{1} try to hop to {2}".format(creature.position.column, creature.position.row, creature.direction))
         if isWall:
             print("Ocha...hit a wall")
             return
@@ -174,7 +175,7 @@ class SimpleWorld:
         self.__creatureMap[creature.position.row][creature.position.column] = creature 
     
     def infectTargetEnemy(self, pos, creature):
-        print("Try to infect to {0}|{1}".format(pos.row, pos.column))
+        print("{0}|{1} try to infect to {2}|{3}".format(creature.position.column, creature.position.row, pos.column, pos.row))
         if self.isOutBoundary(pos):
             print("Hmm...nothing infected")
             return
@@ -192,12 +193,12 @@ class SimpleWorld:
         
 
     def drawWorld(self):
-        msg = ""
-
-        for widthIndex in range(self.__worldWidth):
-            for heightIndex in range(self.__worldHeight):
-                terrian = self.__terrianMap[widthIndex][heightIndex]
-                creature = self.__creatureMap[widthIndex][heightIndex]
+        msg = "\n"
+     
+        for heightIndex in range(self.__worldHeight):
+            for widthIndex in range(self.__worldWidth):
+                terrian = self.__terrianMap[heightIndex][widthIndex]
+                creature = self.__creatureMap[heightIndex][widthIndex]
                 isActiveCreature = creature == self.__activeCreature 
 
                 if(isActiveCreature):
