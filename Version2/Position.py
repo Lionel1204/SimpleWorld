@@ -1,3 +1,5 @@
+from WorldEnum import Direction
+
 class Position:
     
     def __init__(self, row, column):
@@ -7,18 +9,23 @@ class Position:
     @property
     def row(self):
         return self.__row
-
-    @row.setter
-    def row(self, value):
-        self.__row = value
     
     @property
     def column(self):
         return self.__column
-
-    @column.setter
-    def column(self, value):
-        self.__column = value
+    
+    def getNextPosition(self, direction):
+        nextPos = Position(self.row, self.column)
+        if(direction == Direction.EAST):
+            nextPos.__column += 1
+        elif(direction == Direction.WEST):
+            nextPos.__column -= 1
+        elif(direction == Direction.NORTH):
+            nextPos.__row -= 1
+        elif(direction == Direction.SOUTH):
+            nextPos.__row += 1
+        
+        return nextPos
 
 if __name__ == "__main__":
     pos = Position(1,2)

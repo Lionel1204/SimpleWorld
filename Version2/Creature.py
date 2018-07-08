@@ -40,9 +40,10 @@ class Creature:
     def direction(self):
         return self.__direction
 
-    def getNextOpcode(self, isEnemy, isEmpty, isSame, isWall):
+    def getExecutableOpcode(self, isEnemy, isEmpty, isSame, isWall):
         if self.__skipRound > 0: # Skip this round and do nothing
             self.__skipRound -= 1
+            print("{0}|{1} hang in hill".format(self.__position.row, self.__position.column))
             return None
 
         executableAddr = self.__species.runToExecutableAddr(self.__currentAddr, isEnemy, isEmpty, isSame, isWall)
@@ -50,16 +51,13 @@ class Creature:
         self.__currentAddr = executableAddr + 1 # move to next line
         return opCode
 
-    def hop(self):
-        if(self.__direction == Direction.EAST):
-            self.__position.row += 1
-        elif(self.__direction == Direction.WEST):
-            self.__position.row -= 1
-        elif(self.__direction == Direction.NORTH):
-            self.__position.column -= 1
-        elif(self.__direction == Direction.SOUTH):
-            self.__position.column += 1
+    def hop(self, isEnteringHill):
+        oldPos = self.__position
+        self.__position = self.getNextPosition()
+        if isEnteringHill and self.canFly == False:
+            self.__skipRound = Config.HILLSKIPROUND
 
+        print("{0}|{1} hop into {2}|{3}".format(oldPos.row, oldPos.column, self.__position.row, self.__position.column))
     
     def turnRight(self):
         if(self.__direction == Direction.EAST):
@@ -70,6 +68,8 @@ class Creature:
             self.__direction = Direction.EAST
         elif(self.__direction == Direction.SOUTH):
             self.__direction = Direction.WEST
+        
+        print("{0}|{1} turn right".format(self.__position.row, self.__position.column))
 
     def turnLeft(self):
         if(self.__direction == Direction.EAST):
@@ -81,15 +81,16 @@ class Creature:
         elif(self.__direction == Direction.SOUTH):
             self.__direction = Direction.EAST
 
+        print("{0}|{1} turn left".format(self.__position.row, self.__position.column))
+
     def infected(self, sourceCreature):
         self.__species = sourceCreature.__species
+        print("{0}|{1} infected by {2}|{3}".format(self.__position.row, self.__position.column, \
+        sourceCreature.__position.row, sourceCreature.__position.column))
 
-    def enterHill(self):
-        if self.canFly:
-            return
-
-        self.__skipRound = Config.HILLSKIPROUND
-
+    def getNextPosition(self):
+        nextPos = self.__position.getNextPosition(self.__direction)
+        return nextPos
 
 
 if __name__ == "__main__":
@@ -107,7 +108,7 @@ if __name__ == "__main__":
     inss = [ins0, ins1, ins2,ins3, ins4, ins5, ins6, ins7, ins8, ins9]
     spec = Species("FLYTRAP", inss)
     creature = Creature(spec, Direction.EAST, [Ability.FLY, Ability.ARCH], Position(1,1))
-    opcode = creature.getNextOpcode(False, False, True, True)
+    opcode = creature.getExecutableOpcode(False, False, True, True)
     assert(opcode == OpCode.RIGHT)
-    opcode = creature.getNextOpcode(True, False, True, True)
+    opcode = creature.getExecutableOpcode(True, False, True, True)
     assert(opcode == OpCode.INFECT)
