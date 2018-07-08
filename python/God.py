@@ -10,14 +10,14 @@ class God:
         self.__creatures = None
 
     def createWorld(self, creaturesNumber, gridX, gridY):
-        self.createCreatures(creaturesNumber, SpeciesType.Flytrap)
+        self.createCreatures(creaturesNumber, SpeciesType.LandMine)
         self.createLand(gridX, gridY)
         self.putCreaturesToLand()
         self.outputWorld()
 
     def createLand(self, gridX, gridY):
         grid = Grid()
-        grid.createSquares(gridX, gridY, Terrain.Hill)
+        grid.createSquares(gridX, gridY, Terrain.Plain)
         self.__land = grid.getLand()
 
     # Random generate abilities
